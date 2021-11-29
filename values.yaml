@@ -1,0 +1,12 @@
+# Default values for neg-demo-app-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+deployment:
+  image: k8s.gcr.io/serve_hostname:v1.4
+  containerPort: 9376
+  labels:
+    app: neg-demo-app
+
+service:
+  port: 80

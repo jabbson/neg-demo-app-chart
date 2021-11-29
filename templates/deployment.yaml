@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-neg-demo-deploy # Name of Deployment
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+    {{- range $key, $value := .Values.deployment.labels }}
+      {{ $key }}: {{ $value}}
+    {{- end }}
+  template: # Pod template
+    metadata:
+      labels:
+      {{- range $key, $value := .Values.deployment.labels }}
+        {{ $key }}: {{ $value}}
+      {{- end }}
+    spec: # Pod specification; each Pod created by this Deployment has this specification
+      containers:
+      - image: {{ .Values.deployment.image }} # Application to run in Deployment's Pods
+        name: {{ .Release.Name }}-neg-demo-container # Container name
+        ports:
+        - containerPort: {{ .Values.deployment.containerPort }}
+          protocol: TCP
